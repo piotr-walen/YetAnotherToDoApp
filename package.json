@@ -1,0 +1,16 @@
+{
+    "name": "todo-list-postgresql",
+    "version": "1.0.0",
+    "description": "Simple todo list developed with NodeJS, Express, PostgreSQL, React",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Piotr Waleń",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^5.0.1",
+        "express": "^4.16.3",
+        "pg": "^7.4.3"
+    }
+}
