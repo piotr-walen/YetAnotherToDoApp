@@ -5,9 +5,9 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require('./routes/auth');
-app.use('/api/v1/auth', auth);
+app.use(auth);
 const todos = require('./routes/todos');
-app.use('/api/v1/todos', todos);
+app.use(todos);
 
 app.use(function(request, response, next) {
     let error = new Error('Not Found');
