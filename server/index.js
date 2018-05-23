@@ -8,8 +8,8 @@ const todo = require('./routes/todo');
 app.use(todo);
 
 app.use(function(error, request, response, next) {
-    console.error(error.stack);
-    response.status(500).send({ error: error.message });
+    console.log(error);
+    response.status(error.status || 500).send({ error: error.message });
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
