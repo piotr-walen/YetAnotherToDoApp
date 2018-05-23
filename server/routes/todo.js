@@ -18,14 +18,8 @@ router.post('/api/v1/todos', async (request, response, next) => {
         const databaseResponse = await client.query(
             'SELECT * FROM items ORDER BY id ASC'
         );
-        // Stream results back one row at a time
-        databaseResponse.rows.forEach(row => {
-            console.log(row);
-            results.push(row);
-        });
-        // After all data is returned, close connection and return results
-        client.release();
         response.status(200).json({ data: results });
+        client.release();
     } catch (error) {
         next(error);
     }
@@ -40,14 +34,8 @@ router.get('/api/v1/todos', async (request, response, next) => {
         const databaseResponse = await client.query(
             'SELECT * FROM items ORDER BY id ASC'
         );
-        // Stream results back one row at a time
-        databaseResponse.rows.forEach(row => {
-            console.log(row);
-            results.push(row);
-        });
-        // After all data is returned, close connection and return results
+        response.status(200).json({ data: databaseResponse.rows });
         client.release();
-        response.status(200).json({ data: results });
     } catch (error) {
         next(error);
     }
