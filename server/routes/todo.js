@@ -8,9 +8,7 @@ router.post('/api/v1/todos', async (request, response, next) => {
     // Grab data from http request
     const data = { text: request.body.text, complete: false };
     // Get a Postgres client from the connection pool
-
     const pool = new pg.Pool({ connectionString });
-
     pool.on('error', (error, client) => {
         next(error);
         process.exit(-1);
