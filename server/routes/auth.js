@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pool = require('../database');
 
+
+
 router.post('/signin', async function(request, response, next) {
     try {
         const { username } = request.body;

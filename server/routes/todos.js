@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../database');
 
-router.post('/', async (request, response, next) => {
+const { loginRequired, ensureCorrectUser } = require('../middleware/auth');
+
+router.post('/', loginRequired, async (request, response, next) => {
     const { text } = request.body;
     const complete = false;
     try {
@@ -19,7 +21,7 @@ router.post('/', async (request, response, next) => {
     }
 });
 
-router.get('/', async (request, response, next) => {
+router.get('/', loginRequired, async (request, response, next) => {
     try {
         client = await pool.connect();
         const items = await client.query('SELECT * FROM items ORDER BY id ASC');
@@ -30,7 +32,7 @@ router.get('/', async (request, response, next) => {
     }
 });
 
-router.put('/:id', async (request, response, next) => {
+router.put('/:id', loginRequired, async (request, response, next) => {
     const { text, complete } = request.body;
     const { id } = request.params;
     try {
@@ -51,7 +53,7 @@ router.put('/:id', async (request, response, next) => {
     }
 });
 
-router.delete('/:id', async (request, response, next) => {
+router.delete('/:id', loginRequired, async (request, response, next) => {
     const { id } = request.params;
     try {
         client = await pool.connect();
