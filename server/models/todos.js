@@ -11,3 +11,5 @@ async function create() {
     console.log(result.rows);
     client.end();
 }
+
+create();
