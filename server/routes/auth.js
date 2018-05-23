@@ -61,13 +61,4 @@ router.post('/signup', async function(request, response, next) {
     }
 });
 
-const comparePassword = async function(candidatePassword, next) {
-    try {
-        let isMatch = await bcrypt.compare(candidatePassword, this.password);
-        return isMatch;
-    } catch (err) {
-        return next(err);
-    }
-};
-
 module.exports = router;
