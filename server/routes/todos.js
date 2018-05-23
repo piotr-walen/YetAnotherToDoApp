@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../database');
 
-router.post('/api/v1/todos', async (request, response, next) => {
+router.post('/', async (request, response, next) => {
     const { text } = request.body;
     const complete = false;
     try {
@@ -19,7 +19,7 @@ router.post('/api/v1/todos', async (request, response, next) => {
     }
 });
 
-router.get('/api/v1/todos', async (request, response, next) => {
+router.get('/', async (request, response, next) => {
     try {
         client = await pool.connect();
         const items = await client.query('SELECT * FROM items ORDER BY id ASC');
@@ -30,7 +30,7 @@ router.get('/api/v1/todos', async (request, response, next) => {
     }
 });
 
-router.put('/api/v1/todos/:id', async (request, response, next) => {
+router.put('/:id', async (request, response, next) => {
     const { text, complete } = request.body;
     const { id } = request.params;
     try {
@@ -51,7 +51,7 @@ router.put('/api/v1/todos/:id', async (request, response, next) => {
     }
 });
 
-router.delete('/api/v1/todos/:id', async (request, response, next) => {
+router.delete('/:id', async (request, response, next) => {
     const { id } = request.params;
     try {
         client = await pool.connect();
