@@ -1,11 +1,9 @@
 require('dotenv').config();
-//Create items table
-// require('./models/database')();
-
 const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+
 const todo = require('./routes/todo');
 app.use(todo);
 
