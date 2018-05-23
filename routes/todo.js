@@ -3,35 +3,41 @@ const router = express.Router();
 const pg = require('pg');
 const connectionString = process.env.DATABASE_URL;
 
-router.post('/api/v1/todos', (req, res, next) => {
+router.post('/api/v1/todos', async (request, response, next) => {
     const results = [];
     // Grab data from http request
-    const data = { text: req.body.text, complete: false };
+    const data = { text: request.body.text, complete: false };
     // Get a Postgres client from the connection pool
-    pg.connect(connectionString, (err, client, done) => {
-        // Handle connection errors
-        if (err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err });
-        }
+
+    const pool = new pg.Pool({ connectionString });
+
+    pool.on('error', (error, client) => {
+        next(error);
+        process.exit(-1);
+    });
+
+    try {
+        client = await pool.connect();
         // SQL Query > Insert Data
-        client.query('INSERT INTO items(text, complete) values($1, $2)', [
+        await client.query('INSERT INTO items(text, complete) values($1, $2)', [
             data.text,
             data.complete
         ]);
         // SQL Query > Select Data
-        const query = client.query('SELECT * FROM items ORDER BY id ASC');
+        const databaseResponse = await client.query(
+            'SELECT * FROM items ORDER BY id ASC'
+        );
         // Stream results back one row at a time
-        query.on('row', row => {
+        databaseResponse.rows.forEach(row => {
+            console.log(row);
             results.push(row);
         });
         // After all data is returned, close connection and return results
-        query.on('end', () => {
-            done();
-            return res.json(results);
-        });
-    });
+        client.end();
+        response.status(200).json({ data: results });
+    } catch (error) {
+        next(error);
+    }
 });
 
 module.exports = router;

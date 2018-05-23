@@ -9,6 +9,7 @@
     "author": "Piotr Waleń",
     "license": "ISC",
     "dependencies": {
+        "body-parser": "^1.18.3",
         "dotenv": "^5.0.1",
         "express": "^4.16.3",
         "pg": "^7.4.3"
