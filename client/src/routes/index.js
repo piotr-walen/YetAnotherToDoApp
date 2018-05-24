@@ -1,10 +1,16 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router';
+import { Route, Switch, withRouter, Redirect } from 'react-router';
 import LoginForm from '../containers/LoginForm';
 import RegisterForm from '../containers/RegisterForm';
 import LogoutView from '../containers/LogoutView';
+import { connect } from 'react-redux';
+import Todos from '../containers/Todos';
 
-const Routes = () => (
+function mapStateToProps(state) {
+    return { authenticated: state.auth.authenticated, user: state.auth.user };
+}
+
+const Routes = ({ authenticated }) => (
     <Switch>
         <Route exact path="/" component={() => <div>Home Page</div>} />
         <Route path="/login" component={props => <LoginForm {...props} />} />
@@ -13,8 +19,14 @@ const Routes = () => (
             path="/register"
             component={props => <RegisterForm {...props} />}
         />
+        <Route
+            path="/todos"
+            component={props =>
+                authenticated ? <Todos /> : <Redirect to="/login" />
+            }
+        />
         <Route component={() => <div>Not Found</div>} />
     </Switch>
 );
 
-export default withRouter(Routes);
+export default withRouter(connect(mapStateToProps)(Routes));
