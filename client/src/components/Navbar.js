@@ -47,9 +47,6 @@ const Navbar = ({ authenticated, user }) => {
     const authComponents = authenticated ? (
         <Authentication>
             <Wrapper>
-                <StyledLink to="/todos">Todos</StyledLink>
-            </Wrapper>
-            <Wrapper>
                 <StyledLink to="/logout">Logout</StyledLink>
             </Wrapper>
         </Authentication>
@@ -64,7 +61,16 @@ const Navbar = ({ authenticated, user }) => {
         </Authentication>
     );
 
-    const navigationComponents = (
+    const navigationComponents = authenticated ? (
+        <Navigation>
+            <Wrapper>
+                <StyledLink to="/">Home</StyledLink>
+            </Wrapper>
+            <Wrapper>
+                <StyledLink to="/todos">Todos</StyledLink>
+            </Wrapper>
+        </Navigation>
+    ) : (
         <Navigation>
             <Wrapper>
                 <StyledLink to="/">Home</StyledLink>
