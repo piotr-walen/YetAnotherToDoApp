@@ -1,4 +1,9 @@
-import { LOGIN_USER, LOGOUT_USER } from '../actions';
+import { LOGIN_USER, LOGOUT_USER } from '../actions/auth';
+
+const initialState = {
+    authenticated: false,
+    user: {}
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {

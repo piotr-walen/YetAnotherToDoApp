@@ -7,7 +7,7 @@ const Routes = () => (
         <Route path="/login" component={() => <div>Login Form</div>} />
         <Route path="/logout" component={() => <div>Logout</div>} />
         <Route path="/register" component={() => <div>Login Form</div>} />
-        <Route component={() => <NotFound />} />
+        <Route component={() => <div>Not Found</div>} />
     </Switch>
 );
 
