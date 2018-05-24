@@ -1,8 +1,16 @@
 require('dotenv').config();
+
 const express = require('express');
 const app = express();
-var bodyParser = require('body-parser');
+
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
+const cors = require('cors');
+app.use(cors());
 
 const auth = require('./routes/auth');
 app.use(auth);
