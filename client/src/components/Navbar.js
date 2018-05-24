@@ -6,6 +6,10 @@ const Navbar = ({ authenticated, user }) => {
     const authComponents = authenticated ? (
         <div>
             <div>
+                <Link to="/todos">link to /todos</Link>
+            </div>
+
+            <div>
                 <Link to="/logout">link to /logout/</Link>
             </div>
         </div>
