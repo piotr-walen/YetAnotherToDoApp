@@ -21,7 +21,7 @@ let createHandlers = ({ history, dispatch }) => {
             const parsed = await response.json();
             console.log(parsed);
             if (parsed.error) {
-                throw new Error(parsed.error.message);
+                throw new Error(parsed.error);
             }
             if (parsed.data) {
                 dispatch(auth.login(parsed.data));

@@ -25,7 +25,7 @@ app.use(function(request, response, next) {
 
 app.use(function(error, request, response, next) {
     console.log(error);
-    response.status(error.status || 500).send(error.message);
+    response.status(error.status || 500).send({error: error.message});
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
