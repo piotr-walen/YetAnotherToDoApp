@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pool = require('../database');
 
-router.post('/api/auth/signin', async function(request, response, next) {
+router.post('/api/auth/login', async function(request, response, next) {
     try {
         const { username } = request.body;
         const candidatePassword = request.body.password;
@@ -33,7 +33,7 @@ router.post('/api/auth/signin', async function(request, response, next) {
     }
 });
 
-router.post('/api/auth/signup', async function(request, response, next) {
+router.post('/api/auth/register', async function(request, response, next) {
     try {
         const { username, password } = request.body;
         let hashedPassword = await bcrypt.hash(password, 10);
