@@ -1,42 +1,82 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+`;
+
+const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+`;
+
+const Authentication = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    display: flex;
+    padding: 0 20px;
+`;
+
+const Navigation = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    display: flex;
+    padding: 0 20px;
+`;
+
+const Box = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0, 50, 200, 1);
+`;
 
 const Navbar = ({ authenticated, user }) => {
     console.log(authenticated);
     const authComponents = authenticated ? (
-        <div>
-            <div>
-                <Link to="/todos">link to /todos</Link>
-            </div>
-
-            <div>
-                <Link to="/logout">link to /logout/</Link>
-            </div>
-        </div>
+        <Authentication>
+            <Wrapper>
+                <StyledLink to="/todos">Todos</StyledLink>
+            </Wrapper>
+            <Wrapper>
+                <StyledLink to="/logout">Logout</StyledLink>
+            </Wrapper>
+        </Authentication>
     ) : (
-        <div>
-            <div>
-                <Link to="/login">link to /login/</Link>
-            </div>
-            <div>
-                <Link to="/register">link to /register/</Link>
-            </div>
-        </div>
+        <Authentication>
+            <Wrapper>
+                <StyledLink to="/login">Login</StyledLink>
+            </Wrapper>
+            <Wrapper>
+                <StyledLink to="/register">Register</StyledLink>
+            </Wrapper>
+        </Authentication>
     );
 
     const navigationComponents = (
-        <div>
-            <div>
-                <Link to="/">link to /</Link>
-            </div>
-        </div>
+        <Navigation>
+            <Wrapper>
+                <StyledLink to="/">Home</StyledLink>
+            </Wrapper>
+        </Navigation>
     );
 
     return (
-        <div>
+        <Box>
             {navigationComponents}
             {authComponents}
-        </div>
+        </Box>
     );
 };
 
