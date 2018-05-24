@@ -75,7 +75,7 @@ const Input = styled.input`
     margin: 10px 10px 0px;
     border-radius: 4px;
     text-indent: 8px;
-    font-size: 20px;
+    font-size: 18px;
     border: 1px solid grey;
 `;
 
@@ -86,7 +86,7 @@ const Button = styled.button`
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    font-size: 20px;
+    font-size: 18px;
     height: 40px;
     margin: 10px 10px 10px;
     border-radius: 4px;
