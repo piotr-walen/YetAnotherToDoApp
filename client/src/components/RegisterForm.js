@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import styled from 'styled-components';
 export default class Register extends Component {
     state = {
         username: '',
@@ -29,22 +29,22 @@ export default class Register extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label> Register </label>
-                <input
+            <Form onSubmit={this.handleSubmit}>
+                <Label> Register </Label>
+                <Input
                     type="text"
                     value={this.state.username}
                     onChange={this.handleChange('username')}
                     placeholder="username"
                 />
-                <input
+                <Input
                     value={this.state.password}
                     type="password"
                     onChange={this.handleChange('password')}
                     placeholder="password"
                 />
-                <button type="submit">Submit</button>
-            </form>
+                <Button type="submit">Submit</Button>
+            </Form>
         );
     }
 }
