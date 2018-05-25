@@ -21,12 +21,16 @@ class Todos extends React.Component {
         });
     };
 
-    handleChange = field => event => {
+    handleChange = event => {
         const value = event.target.value;
         this.setState(previousState => ({
             ...previousState,
             todo: { ...previousState.todo, text: value }
         }));
+    };
+
+    handleClick = todo => event => {
+        this.props.toggleTodo(this.props.user, todo);
     };
 
     render() {
@@ -37,7 +41,7 @@ class Todos extends React.Component {
                     <input
                         type="text"
                         value={this.state.todo.text}
-                        onChange={this.handleChange()}
+                        onChange={this.handleChange}
                         placeholder="todo"
                     />
                     <button type="submit">Submit</button>
@@ -46,11 +50,19 @@ class Todos extends React.Component {
                     {this.props.todos.map(
                         todo =>
                             todo.complete ? (
-                                <CheckedTodo key={todo.id}>
+                                <CheckedTodo
+                                    key={todo.id}
+                                    onClick={this.handleClick(todo)}
+                                >
                                     {todo.text}
                                 </CheckedTodo>
                             ) : (
-                                <Todo key={todo.id}>{todo.text}</Todo>
+                                <Todo
+                                    key={todo.id}
+                                    onClick={this.handleClick(todo)}
+                                >
+                                    {todo.text}
+                                </Todo>
                             )
                     )}
                 </List>
