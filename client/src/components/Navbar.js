@@ -43,7 +43,6 @@ const Box = styled.div`
 `;
 
 const Navbar = ({ authenticated, user }) => {
-    console.log(authenticated);
     const authComponents = authenticated ? (
         <Authentication>
             <Wrapper>
