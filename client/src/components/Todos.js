@@ -84,6 +84,7 @@ const Form = styled.form`
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 `;
 
 const Input = styled.input`
@@ -95,6 +96,7 @@ const Input = styled.input`
     box-shadow: none;
     width: 100%;
     border-radius: 4px;
+    margin-right: 4px;
     text-indent: 10px;
     font-size: 20px;
     border: 1px solid grey;
