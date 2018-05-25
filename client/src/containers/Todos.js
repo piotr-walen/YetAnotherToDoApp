@@ -28,7 +28,6 @@ const mapDispatchToProps = dispatch => ({
         }
     },
     createTodo: async (user, todo) => {
-        console.log(todo);
         const request = {
             body: JSON.stringify(todo),
             type: 'cors',

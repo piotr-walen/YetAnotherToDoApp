@@ -12,7 +12,6 @@ class Todos extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(this.state);
         this.props.createTodo(this.props.user, {
             ...this.state.todo
         });
