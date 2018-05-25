@@ -39,17 +39,16 @@ class Todos extends React.Component {
 
     render() {
         return (
-            <div>
-                <label> Add todo: </label>
-                <form onSubmit={this.handleSubmit}>
-                    <input
+            <MainWrapper>
+                <Form onSubmit={this.handleSubmit}>
+                    <Input
                         type="text"
                         value={this.state.todo.text}
                         onChange={this.handleChange}
-                        placeholder="todo"
+                        placeholder="Add ToDo"
                     />
-                    <button type="submit">Submit</button>
-                </form>
+                    <Button type="submit">Submit</Button>
+                </Form>
                 <List>
                     {this.props.todos.map(todo => (
                         <TodoGroup key={todo.id}>
@@ -68,24 +67,68 @@ class Todos extends React.Component {
                         </TodoGroup>
                     ))}
                 </List>
-            </div>
+            </MainWrapper>
         );
     }
 }
 
 export default Todos;
 
-const List = styled.div`
+const MainWrapper = styled.div`
     margin: 50px auto;
     width: 500px;
+    font-size: 24px;
+`;
+
+const Form = styled.form`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`;
+
+const Input = styled.input`
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    width: 100%;
+    border-radius: 4px;
+    text-indent: 10px;
+    font-size: 20px;
+    border: 1px solid grey;
+`;
+
+const Button = styled.button`
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    font-size: 18px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: rgba(10, 50, 200, 1);
+    color: white;
+`;
+
+const List = styled.div`
+    width: 100%;
     list-style-type: none;
 `;
 
-const Todo = styled.span``;
-
-const TodoGroup = styled.li`
-    font-size: 24px;
+const Todo = styled.span`
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 `;
+
+const TodoGroup = styled.li``;
 
 const CheckedTodo = styled(Todo)`
     text-decoration: line-through;
