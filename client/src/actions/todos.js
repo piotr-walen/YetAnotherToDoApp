@@ -3,7 +3,7 @@ export const ADD_TODO = 'ADD_TODO';
 
 export function loadTodos(todos) {
     return {
-        type: LOGOUT_USER,
+        type: LOAD_TODOS,
         todos
     };
 }
