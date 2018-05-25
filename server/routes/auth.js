@@ -28,6 +28,7 @@ router.post('/api/auth/login', async function(request, response, next) {
             process.env.SECRET_KEY
         );
         response.status(200).json({ data: { id, username, token } });
+        client.release();
     } catch (error) {
         next(error);
     }
@@ -56,6 +57,7 @@ router.post('/api/auth/register', async function(request, response, next) {
             process.env.SECRET_KEY
         );
         response.status(200).json({ data: { id, username, token } });
+        client.release();
     } catch (error) {
         next(error);
     }
