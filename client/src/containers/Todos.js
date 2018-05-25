@@ -26,6 +26,31 @@ const mapDispatchToProps = dispatch => ({
         } catch (error) {
             console.log(error.message);
         }
+    },
+    createTodo: async (user, todo) => {
+        console.log(todo);
+        const request = {
+            body: JSON.stringify(todo),
+            type: 'cors',
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer: ${user.token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        };
+        try {
+            const response = await fetch(`api/user/${user.id}/todos`, request);
+            const parsed = await response.json();
+            if (parsed.error) {
+                throw new Error(parsed.error);
+            }
+            if (parsed.data) {
+                dispatch(todos.loadTodos(parsed.data));
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 });
 
