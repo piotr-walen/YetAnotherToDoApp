@@ -77,6 +77,32 @@ const mapDispatchToProps = dispatch => ({
         } catch (error) {
             console.log(error.message);
         }
+    },
+    deleteTodo: async (user, todo) => {
+        const request = {
+            type: 'cors',
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer: ${user.token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        };
+        try {
+            const response = await fetch(
+                `api/user/${user.id}/todos/${todo.id}`,
+                request
+            );
+            const parsed = await response.json();
+            if (parsed.error) {
+                throw new Error(parsed.error);
+            }
+            if (parsed.data) {
+                dispatch(todos.loadTodos(parsed.data));
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 });
 

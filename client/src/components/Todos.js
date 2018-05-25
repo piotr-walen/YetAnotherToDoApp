@@ -33,6 +33,10 @@ class Todos extends React.Component {
         this.props.toggleTodo(this.props.user, todo);
     };
 
+    handleDelete = todo => event => {
+        this.props.deleteTodo(this.props.user, todo);
+    };
+
     render() {
         return (
             <div>
@@ -47,24 +51,22 @@ class Todos extends React.Component {
                     <button type="submit">Submit</button>
                 </form>
                 <List>
-                    {this.props.todos.map(
-                        todo =>
-                            todo.complete ? (
-                                <CheckedTodo
-                                    key={todo.id}
-                                    onClick={this.handleClick(todo)}
-                                >
+                    {this.props.todos.map(todo => (
+                        <TodoGroup key={todo.id}>
+                            <DeleteIcon onClick={this.handleDelete(todo)}>
+                                {'X '}
+                            </DeleteIcon>
+                            {todo.complete ? (
+                                <CheckedTodo onClick={this.handleClick(todo)}>
                                     {todo.text}
                                 </CheckedTodo>
                             ) : (
-                                <Todo
-                                    key={todo.id}
-                                    onClick={this.handleClick(todo)}
-                                >
+                                <Todo onClick={this.handleClick(todo)}>
                                     {todo.text}
                                 </Todo>
-                            )
-                    )}
+                            )}
+                        </TodoGroup>
+                    ))}
                 </List>
             </div>
         );
@@ -76,12 +78,17 @@ export default Todos;
 const List = styled.div`
     margin: 50px auto;
     width: 500px;
+    list-style-type: none;
 `;
 
-const Todo = styled.li`
+const Todo = styled.span``;
+
+const TodoGroup = styled.li`
     font-size: 24px;
 `;
 
 const CheckedTodo = styled(Todo)`
     text-decoration: line-through;
 `;
+
+const DeleteIcon = styled.label``;
