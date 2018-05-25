@@ -21,8 +21,8 @@ router.post(
                 'SELECT * FROM items WHERE userId=($1) ORDER BY id ASC',
                 [userId]
             );
-            response.status(201).json({ data: items.rows });
             client.release();
+            response.status(201).json({ data: items.rows });
         } catch (error) {
             next(error);
         }
@@ -70,6 +70,7 @@ router.put(
                 [userId]
             );
             response.status(200).json({ data: items.rows });
+            client.release();
         } catch (error) {
             next(error);
         }
@@ -97,6 +98,7 @@ router.delete(
                 [userId]
             );
             response.status(200).json({ data: items.rows });
+            client.release();
         } catch (error) {
             next(error);
         }
