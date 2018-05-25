@@ -1,5 +1,4 @@
 import React from 'react';
-
 class Todos extends React.Component {
     componentDidMount() {
         this.props.loadTodos(this.props.user);
@@ -14,3 +13,4 @@ class Todos extends React.Component {
         );
     }
 }
+export default Todos;
