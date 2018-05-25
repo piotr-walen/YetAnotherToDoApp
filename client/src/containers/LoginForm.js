@@ -19,7 +19,6 @@ let createHandlers = ({ history, dispatch }) => {
         try {
             const response = await fetch('/api/auth/login/', request);
             const parsed = await response.json();
-            console.log(parsed);
             if (parsed.error) {
                 throw new Error(parsed.error);
             }
