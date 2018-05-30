@@ -1,19 +1,25 @@
-var jwt = require('jsonwebtoken');
+import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
-exports.loginRequired = function(request, response, next) {
+const loginRequired = function(
+    request: Request,
+    response: Response,
+    next: NextFunction
+) {
     try {
         if (!request.headers.authorization) {
             const error = new Error('Missing authorization header');
-            error.status = 400;
             throw error;
         }
         const token = request.headers.authorization.split(' ')[1];
-        jwt.verify(token, process.env.SECRET_KEY, function(error, decoded) {
+        jwt.verify(token, String(process.env.SECRET_KEY), function(
+            error: Error,
+            decoded
+        ) {
             if (decoded) {
                 next();
             } else {
                 const error = new Error('Incorrect authorization token');
-                error.status = 401;
                 throw error;
             }
         });
@@ -22,20 +28,28 @@ exports.loginRequired = function(request, response, next) {
     }
 };
 
-exports.ensureCorrectUser = function(request, response, next) {
+const ensureCorrectUser = function(
+    request: Request,
+    response: Response,
+    next: NextFunction
+) {
     try {
         if (!request.headers.authorization) {
             const error = new Error('Missing authorization header');
-            error.status = 400;
             throw error;
         }
         const token = request.headers.authorization.split(' ')[1];
-        jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
-            if (decoded && decoded.id === Number(request.params.userId)) {
+        jwt.verify(token, String(process.env.SECRET_KEY), function(
+            error: Error,
+            decoded
+        ) {
+            if (
+                decoded &&
+                Object(decoded).id === Number(request.params.userId)
+            ) {
                 next();
             } else {
                 const error = new Error('Unauthorized');
-                error.status = 401;
                 throw error;
             }
         });
@@ -43,3 +57,5 @@ exports.ensureCorrectUser = function(request, response, next) {
         next(error);
     }
 };
+
+export { loginRequired, ensureCorrectUser };
