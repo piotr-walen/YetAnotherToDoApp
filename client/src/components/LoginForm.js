@@ -65,6 +65,7 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
+    font-family: 'Titillium Web', sans-serif;
     border: none;
     background-image: none;
     background-color: transparent;
@@ -80,6 +81,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
+    font-family: 'Titillium Web', sans-serif;
     border: none;
     background-image: none;
     background-color: transparent;
