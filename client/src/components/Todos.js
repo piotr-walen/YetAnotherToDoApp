@@ -46,12 +46,22 @@ class Todos extends React.Component {
                         value={this.state.todo.text}
                         onChange={this.handleChange}
                         placeholder="Add ToDo"
+                        innerRef={x => {
+                            this.input = x;
+                        }}
+                        onMouseEnter={() => this.input.focus()}
                     />
                     <Button type="submit">Submit</Button>
                 </Form>
                 <List>
                     {this.props.todos.map(todo => (
-                        <TodoGroup key={todo.id}>
+                        <TodoGroup
+                            key={todo.id}
+                            innerRef={x => {
+                                this.input = x;
+                            }}
+                            onMouseEnter={() => this.input.focus()}
+                        >
                             <DeleteIcon onClick={this.handleDelete(todo)}>
                                 {'X '}
                             </DeleteIcon>
@@ -84,10 +94,11 @@ const Form = styled.form`
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 `;
 
 const Input = styled.input`
+    font-family: 'Titillium Web', sans-serif;
     border: none;
     background-image: none;
     background-color: transparent;
@@ -95,14 +106,16 @@ const Input = styled.input`
     -moz-box-shadow: none;
     box-shadow: none;
     width: 100%;
-    border-radius: 4px;
-    margin-right: 4px;
+    margin-right: 8px;
     text-indent: 10px;
     font-size: 20px;
     border: 1px solid grey;
+    border-radius: 4px;
+    outline-width: 0;
 `;
 
 const Button = styled.button`
+    font-family: 'Titillium Web', sans-serif;
     border: none;
     background-image: none;
     background-color: transparent;
@@ -116,9 +129,14 @@ const Button = styled.button`
     color: white;
 `;
 
-const List = styled.div`
+const List = styled.ul`
     width: 100%;
     list-style-type: none;
+    border-radius: 4px;
+    border: 1px solid grey;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
 `;
 
 const Todo = styled.span`
@@ -130,10 +148,19 @@ const Todo = styled.span`
     user-select: none;
 `;
 
-const TodoGroup = styled.li``;
+const TodoGroup = styled.li`
+    padding-left: 20px;
+    padding-top: 0px;
+`;
 
 const CheckedTodo = styled(Todo)`
     text-decoration: line-through;
 `;
 
-const DeleteIcon = styled.label``;
+const DeleteIcon = styled.label`
+    opacity: 0;
+    color: red;
+    ${TodoGroup}:hover & {
+        opacity: 1;
+    }
+`;
