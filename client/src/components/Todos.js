@@ -55,25 +55,16 @@ class Todos extends React.Component {
                 </Form>
                 <List>
                     {this.props.todos.map(todo => (
-                        <TodoGroup
-                            key={todo.id}
-                            innerRef={x => {
-                                this.input = x;
-                            }}
-                            onMouseEnter={() => this.input.focus()}
-                        >
+                        <TodoGroup key={todo.id}>
                             <DeleteIcon onClick={this.handleDelete(todo)}>
                                 {'X '}
                             </DeleteIcon>
-                            {todo.complete ? (
-                                <CheckedTodo onClick={this.handleClick(todo)}>
-                                    {todo.text}
-                                </CheckedTodo>
-                            ) : (
-                                <Todo onClick={this.handleClick(todo)}>
-                                    {todo.text}
-                                </Todo>
-                            )}
+                            <Todo
+                                onClick={this.handleClick(todo)}
+                                complete={todo.complete}
+                            >
+                                {todo.text}
+                            </Todo>
                         </TodoGroup>
                     ))}
                 </List>
@@ -132,8 +123,6 @@ const Button = styled.button`
 const List = styled.ul`
     width: 100%;
     list-style-type: none;
-    border-radius: 4px;
-    border: 1px solid grey;
     list-style: none;
     margin: 0px;
     padding: 0px;
@@ -146,20 +135,17 @@ const Todo = styled.span`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    text-decoration: ${({ complete }) => (complete ? 'line-through' : 'none')};
 `;
 
 const TodoGroup = styled.li`
-    padding-left: 20px;
-    padding-top: 0px;
-`;
-
-const CheckedTodo = styled(Todo)`
-    text-decoration: line-through;
+    padding: 0;
 `;
 
 const DeleteIcon = styled.label`
     opacity: 0;
     color: red;
+    transition: opacity 0.3s ease-in-out;
     ${TodoGroup}:hover & {
         opacity: 1;
     }
