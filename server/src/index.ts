@@ -1,33 +1,30 @@
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import express, { NextFunction, Request, Response } from 'express';
-import morgan from 'morgan';
-import { ensureCorrectUser } from './middleware/auth';
+import bodyParser from "body-parser";
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import morgan from "morgan";
+import { login, register } from "./controllers/auth";
+import { errorHandler, notFoundHandler } from "./controllers/error";
 import {
     createTodo,
+    deleteTodo,
     getTodos,
     updateTodo,
-    deleteTodo
-} from './controllers/todos';
-import { notFoundHandler, errorHandler } from './controllers/error';
-import { login, register } from './controllers/auth';
+} from "./controllers/todos";
+import { ensureCorrectUser } from "./middleware/auth";
 
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(cors());
 
-const auth = require('./routes/auth');
-app.use(auth);
-
-app.post('/api/auth/login', login);
-app.post('/api/auth/register', register);
-app.post('/api/user/:userId/todos', ensureCorrectUser, createTodo);
-app.get('/api/user/:userId/todos/', ensureCorrectUser, getTodos);
-app.put('/api/user/:userId/todos/:id', ensureCorrectUser, updateTodo);
-app.delete('/api/user/:userId/todos/:id', ensureCorrectUser, deleteTodo);
+app.post("/api/auth/login", login);
+app.post("/api/auth/register", register);
+app.post("/api/user/:userId/todos", ensureCorrectUser, createTodo);
+app.get("/api/user/:userId/todos/", ensureCorrectUser, getTodos);
+app.put("/api/user/:userId/todos/:id", ensureCorrectUser, updateTodo);
+app.delete("/api/user/:userId/todos/:id", ensureCorrectUser, deleteTodo);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
