@@ -3,9 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import pool from '../database';
 
-const router = express.Router();
-
-router.post('/api/auth/login', async function(
+export const login = async function(
     request: Request,
     response: Response,
     next: NextFunction
@@ -36,9 +34,13 @@ router.post('/api/auth/login', async function(
     } catch (error) {
         next(error);
     }
-});
+};
 
-router.post('/api/auth/register', async function(request, response, next) {
+export const register = async function(
+    request: Request,
+    response: Response,
+    next: NextFunction
+) {
     try {
         const { username, password } = request.body;
         let hashedPassword = await bcrypt.hash(password, 10);
@@ -66,6 +68,4 @@ router.post('/api/auth/register', async function(request, response, next) {
     } catch (error) {
         next(error);
     }
-});
-
-module.exports = router;
+};

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-const loginRequired = function(
+export const loginRequired = function(
     request: Request,
     response: Response,
     next: NextFunction
@@ -28,7 +28,7 @@ const loginRequired = function(
     }
 };
 
-const ensureCorrectUser = function(
+export const ensureCorrectUser = function(
     request: Request,
     response: Response,
     next: NextFunction
@@ -57,5 +57,3 @@ const ensureCorrectUser = function(
         next(error);
     }
 };
-
-export { loginRequired, ensureCorrectUser };
