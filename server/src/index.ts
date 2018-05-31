@@ -1,6 +1,7 @@
+import dotenv from "dotenv";
+dotenv.config();
 import bodyParser from "body-parser";
 import cors from "cors";
-import dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
 import { login, register } from "./controllers/auth";
@@ -13,7 +14,6 @@ import {
 } from "./controllers/todos";
 import { ensureCorrectUser } from "./middleware/auth";
 
-dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan("dev"));
