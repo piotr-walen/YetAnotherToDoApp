@@ -6,20 +6,19 @@ import React from 'react';
 let createHandlers = ({ history, dispatch }) => {
     let register = async function(data) {
         const request = {
-            type: 'cors',
             body: JSON.stringify({
                 ...data
             }),
-            method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            method: 'POST',
+            type: 'cors',
         };
         try {
             const response = await fetch('/api/auth/register/', request);
             const parsed = await response.json();
-            console.log(parsed);
             if (parsed.error) {
                 throw new Error(parsed.error);
             }
@@ -28,7 +27,7 @@ let createHandlers = ({ history, dispatch }) => {
                 history.push('/');
             }
         } catch (error) {
-            console.log(error.message);
+            // console.log(error.message);
         }
     };
 

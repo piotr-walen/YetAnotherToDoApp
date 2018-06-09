@@ -4,39 +4,16 @@ import { connect } from 'react-redux';
 import Todos from '../components/Todos';
 
 const mapDispatchToProps = dispatch => ({
-    loadTodos: async user => {
-        const request = {
-            type: 'cors',
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer: ${user.token}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            }
-        };
-        try {
-            const response = await fetch(`api/user/${user.id}/todos`, request);
-            const parsed = await response.json();
-            if (parsed.error) {
-                throw new Error(parsed.error);
-            }
-            if (parsed.data) {
-                dispatch(todos.loadTodos(parsed.data));
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    },
     createTodo: async (user, todo) => {
         const request = {
             body: JSON.stringify(todo),
-            type: 'cors',
-            method: 'POST',
             headers: {
-                Authorization: `Bearer: ${user.token}`,
                 Accept: 'application/json',
+                Authorization: `Bearer: ${user.token}`,
                 'Content-Type': 'application/json'
-            }
+            },
+            method: 'POST',
+            type: 'cors',
         };
         try {
             const response = await fetch(`api/user/${user.id}/todos`, request);
@@ -48,19 +25,72 @@ const mapDispatchToProps = dispatch => ({
                 dispatch(todos.loadTodos(parsed.data));
             }
         } catch (error) {
-            console.log(error.message);
+            // console.log(error.message);
         }
     },
+
+    deleteTodo: async (user, todo) => {
+        const request = {
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer: ${user.token}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'DELETE',
+            type: 'cors',
+        };
+        try {
+            const response = await fetch(
+                `api/user/${user.id}/todos/${todo.id}`,
+                request
+            );
+            const parsed = await response.json();
+            if (parsed.error) {
+                throw new Error(parsed.error);
+            }
+            if (parsed.data) {
+                dispatch(todos.loadTodos(parsed.data));
+            }
+        } catch (error) {
+            // console.log(error.message);
+        }
+    },
+
+    loadTodos: async user => {
+        const request = {
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer: ${user.token}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'GET',
+            type: 'cors',
+
+        };
+        try {
+            const response = await fetch(`api/user/${user.id}/todos`, request);
+            const parsed = await response.json();
+            if (parsed.error) {
+                throw new Error(parsed.error);
+            }
+            if (parsed.data) {
+                dispatch(todos.loadTodos(parsed.data));
+            }
+        } catch (error) {
+            // console.log(error.message);
+        }
+    },
+
     toggleTodo: async (user, todo) => {
         const request = {
             body: JSON.stringify({ ...todo, complete: !todo.complete }),
-            type: 'cors',
-            method: 'PUT',
             headers: {
-                Authorization: `Bearer: ${user.token}`,
                 Accept: 'application/json',
+                Authorization: `Bearer: ${user.token}`,
                 'Content-Type': 'application/json'
-            }
+            },
+            method: 'PUT',
+            type: 'cors',
         };
         try {
             const response = await fetch(
@@ -75,41 +105,16 @@ const mapDispatchToProps = dispatch => ({
                 dispatch(todos.loadTodos(parsed.data));
             }
         } catch (error) {
-            console.log(error.message);
+            // console.log(error.message);
         }
     },
-    deleteTodo: async (user, todo) => {
-        const request = {
-            type: 'cors',
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer: ${user.token}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            }
-        };
-        try {
-            const response = await fetch(
-                `api/user/${user.id}/todos/${todo.id}`,
-                request
-            );
-            const parsed = await response.json();
-            if (parsed.error) {
-                throw new Error(parsed.error);
-            }
-            if (parsed.data) {
-                dispatch(todos.loadTodos(parsed.data));
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
+
 });
 
 const mapStateToProps = state => ({
     authenticated: state.auth.authenticated,
+    todos: state.todos.todos,
     user: state.auth.user,
-    todos: state.todos.todos
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(props => (

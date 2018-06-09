@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -42,7 +42,13 @@ const Box = styled.div`
     background-color: rgba(0, 50, 200, 1);
 `;
 
-const Navbar = ({ authenticated, user }) => {
+const Navbar = ({
+    authenticated,
+    user,
+}: {
+    authenticated: boolean;
+    user: any;
+}) => {
     const authComponents = authenticated ? (
         <Authentication>
             <Wrapper>

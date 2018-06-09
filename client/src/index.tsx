@@ -1,22 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import { createStore, compose } from 'redux';
-import rootReducer from './reducers';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { saveState, loadState } from './localStorage';
+import { createStore } from 'redux';
+import App from './App';
+import './index.css';
+import { loadState, saveState } from './localStorage';
+import rootReducer from './reducers';
+import registerServiceWorker from './registerServiceWorker';
 
 const persistedState = loadState();
 const store = createStore(
     rootReducer,
     persistedState,
-    compose(
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-            window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
 );
 
 store.subscribe(() => {

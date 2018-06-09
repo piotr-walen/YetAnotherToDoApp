@@ -1,43 +1,39 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
+import {IUser} from '../types';
 
-class Todos extends React.Component {
-    componentDidMount() {
-        this.props.loadTodos(this.props.user);
+interface ITodo {
+    text: string;
+    complete: boolean;
+}
+
+interface ITodosProps {
+    user: IUser;
+    todos: ITodo[];
+    loadTodos: (user: IUser) => void;
+    createTodo: (user: IUser, todo: ITodo) => void;
+    toggleTodo: (user: IUser, todo: ITodo) => void;
+    deleteTodo: (user: IUser, todo: ITodo) => void;
+}
+
+interface ITodosState {
+    todo: { text: string; complete: boolean };
+}
+
+class Todos extends React.Component<ITodosProps, ITodosState> {
+    public state = {
+        todo: { text: '', complete: false },
+    };
+    private input: any;
+
+    constructor(props: ITodosProps) {
+        super(props);
+        this.input = React.createRef();
+        this.onEnter = this.onEnter.bind(this);
+        this.referenceInput = this.referenceInput.bind(this);
     }
 
-    state = {
-        todo: { text: '', complete: false }
-    };
-
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.createTodo(this.props.user, {
-            ...this.state.todo
-        });
-
-        this.setState({
-            todo: { text: '', complete: false }
-        });
-    };
-
-    handleChange = event => {
-        const value = event.target.value;
-        this.setState(previousState => ({
-            ...previousState,
-            todo: { ...previousState.todo, text: value }
-        }));
-    };
-
-    handleClick = todo => event => {
-        this.props.toggleTodo(this.props.user, todo);
-    };
-
-    handleDelete = todo => event => {
-        this.props.deleteTodo(this.props.user, todo);
-    };
-
-    render() {
+    public render() {
         return (
             <MainWrapper>
                 <Form onSubmit={this.handleSubmit}>
@@ -46,15 +42,13 @@ class Todos extends React.Component {
                         value={this.state.todo.text}
                         onChange={this.handleChange}
                         placeholder="Add ToDo"
-                        innerRef={x => {
-                            this.input = x;
-                        }}
-                        onMouseEnter={() => this.input.focus()}
+                        innerRef={this.referenceInput}
+                        onMouseEnter={this.onEnter}
                     />
                     <Button type="submit">Submit</Button>
                 </Form>
                 <List>
-                    {this.props.todos.map(todo => (
+                    {this.props.todos.map((todo: any) => (
                         <TodoGroup key={todo.id}>
                             <DeleteIcon onClick={this.handleDelete(todo)}>
                                 <path d="M 10.3125 -0.03125 C 8.589844 -0.03125 7.164063 1.316406 7 3 L 2 3 L 2 5 L 6.96875 5 L 6.96875 5.03125 L 17.03125 5.03125 L 17.03125 5 L 22 5 L 22 3 L 17 3 C 16.84375 1.316406 15.484375 -0.03125 13.8125 -0.03125 Z M 10.3125 2.03125 L 13.8125 2.03125 C 14.320313 2.03125 14.695313 2.429688 14.84375 2.96875 L 9.15625 2.96875 C 9.296875 2.429688 9.6875 2.03125 10.3125 2.03125 Z M 4 6 L 4 22.5 C 4 23.300781 4.699219 24 5.5 24 L 18.59375 24 C 19.394531 24 20.09375 23.300781 20.09375 22.5 L 20.09375 6 Z M 7 9 L 8 9 L 8 22 L 7 22 Z M 10 9 L 11 9 L 11 22 L 10 22 Z M 13 9 L 14 9 L 14 22 L 13 22 Z M 16 9 L 17 9 L 17 22 L 16 22 Z " />
@@ -71,6 +65,46 @@ class Todos extends React.Component {
             </MainWrapper>
         );
     }
+
+    public componentDidMount() {
+        this.props.loadTodos(this.props.user);
+    }
+
+    private referenceInput = (ref: any) => {
+        this.input = ref;
+    };
+    private onEnter = () => this.input.focus();
+
+    private handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        this.props.createTodo(this.props.user, {
+            ...this.state.todo,
+        });
+
+        this.setState({
+            todo: { text: '', complete: false },
+        });
+    };
+
+    private handleChange = (event: React.ChangeEvent<HTMLElement>) => {
+        const { value } = event.target as HTMLInputElement;
+        this.setState(previousState => ({
+            ...previousState,
+            todo: { ...previousState.todo, text: value },
+        }));
+    };
+
+    private handleClick = (todo: ITodo) => (
+        event: React.MouseEvent<HTMLSpanElement>,
+    ) => {
+        this.props.toggleTodo(this.props.user, todo);
+    };
+
+    private handleDelete = (todo: ITodo) => (
+        event: React.MouseEvent<SVGSVGElement>,
+    ) => {
+        this.props.deleteTodo(this.props.user, todo);
+    };
 }
 
 export default Todos;
@@ -136,7 +170,8 @@ const Todo = styled.span`
     -ms-user-select: none;
     user-select: none;
     margin-left: 4px;
-    text-decoration: ${({ complete }) => (complete ? 'line-through' : 'none')};
+    text-decoration: ${({ complete }: { complete: boolean }) =>
+        complete ? 'line-through' : 'none'};
 `;
 
 const TodoGroup = styled.li`

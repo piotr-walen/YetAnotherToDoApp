@@ -3,14 +3,14 @@ export const ADD_TODO = 'ADD_TODO';
 
 export function loadTodos(todos) {
     return {
+        todos,
         type: LOAD_TODOS,
-        todos
     };
 }
 
 export function addTodo(todo) {
     return {
+        todo,
         type: ADD_TODO,
-        todo
     };
 }

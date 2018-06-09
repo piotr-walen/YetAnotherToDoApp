@@ -1,33 +1,32 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
-export default class Register extends Component {
-    state = {
+
+interface IRegisterFormProps {
+    handlers: {
+        register: (
+            user: {
+                password: string;
+                username: string;
+            },
+        ) => void;
+    };
+}
+
+interface IRegisterFormState {
+    password: string;
+    username: string;
+}
+
+export default class RegisterForm extends React.Component<
+    IRegisterFormProps,
+    IRegisterFormState
+> {
+    public state = {
+        password: '',
         username: '',
-        password: ''
     };
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.handlers.register({
-            ...this.state
-        });
-
-        this.setState({
-            username: '',
-            password: ''
-        });
-    };
-
-    handleChange = field => event => {
-        const value = event.target.value;
-        this.setState(previousState => {
-            const newState = { ...previousState };
-            newState[field] = value;
-            return newState;
-        });
-    };
-
-    render() {
+    public render() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Label> Register </Label>
@@ -47,6 +46,29 @@ export default class Register extends Component {
             </Form>
         );
     }
+
+    private handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        this.props.handlers.register({
+            ...this.state,
+        });
+
+        this.setState({
+            password: '',
+            username: '',
+        });
+    };
+
+    private handleChange = (field: string) => (
+        event: React.ChangeEvent<HTMLElement>,
+    ) => {
+        const { value } = event.target as HTMLInputElement;
+        this.setState(previousState => {
+            const newState = { ...previousState };
+            newState[field] = value;
+            return newState;
+        });
+    };
 }
 
 const Label = styled.label`
