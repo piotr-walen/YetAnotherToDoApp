@@ -4,7 +4,8 @@
     "description": "Simple todo list developed with NodeJS, Express, PostgreSQL, React",
     "main": "dist/index.js",
     "scripts": {
-        "start": "tsc & nodemon dist/index.js"
+        "start": "tsc & nodemon dist/index.js",
+        "tsc": "tsc"
     },
     "author": "Piotr Waleń",
     "license": "ISC",
