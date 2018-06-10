@@ -28,8 +28,7 @@ app.delete("/api/user/:userId/todos/:id", ensureCorrectUser, deleteTodo);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const IP = String(process.env.IP);
 const PORT = Number(process.env.PORT);
-app.listen(PORT, IP, () => {
-    console.log(`App is running on ${IP}:${PORT}`);
+app.listen(PORT, () => {
+    console.log(`App is running on ${PORT}`);
 });
