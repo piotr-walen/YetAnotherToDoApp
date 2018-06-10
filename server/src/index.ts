@@ -13,6 +13,7 @@ import {
     updateTodo,
 } from "./controllers/todos";
 import { ensureCorrectUser } from "./middleware/auth";
+import path from 'path';
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,6 +26,12 @@ app.post("/api/user/:userId/todos", ensureCorrectUser, createTodo);
 app.get("/api/user/:userId/todos/", ensureCorrectUser, getTodos);
 app.put("/api/user/:userId/todos/:id", ensureCorrectUser, updateTodo);
 app.delete("/api/user/:userId/todos/:id", ensureCorrectUser, deleteTodo);
+
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+});
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 
