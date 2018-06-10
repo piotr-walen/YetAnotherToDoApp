@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { AnyAction, DispatchProp } from 'redux';
+import { AnyAction, Dispatch } from 'redux';
 import * as todos from '../actions/todos';
 import Todos from '../components/Todos';
 import { IState, ITodo, IUser } from '../types';
 
-const mapDispatchToProps = (dispatch: DispatchProp<AnyAction>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     createTodo: async (user: IUser, todo: ITodo) => {
         const request = {
             body: JSON.stringify(todo),

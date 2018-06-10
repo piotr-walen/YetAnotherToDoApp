@@ -2,7 +2,7 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { AnyAction, DispatchProp } from 'redux';
+import { AnyAction, Dispatch } from 'redux';
 import * as auth from '../actions/auth';
 import LoginForm from '../components/LoginForm';
 import { IUser } from '../types';
@@ -12,7 +12,7 @@ const createHandlers = ({
     dispatch,
 }: {
     history: History;
-    dispatch: DispatchProp<AnyAction>;
+    dispatch: Dispatch<AnyAction>;
 }) => {
     const login = async (user: IUser) => {
         const request = {
@@ -48,7 +48,7 @@ const createHandlers = ({
 
 export default withRouter<any>(
     connect()(
-        (props: { history: History; dispatch: DispatchProp<AnyAction> }) => (
+        (props: { history: History; dispatch: Dispatch<AnyAction> }) => (
             <LoginForm handlers={createHandlers(props)} />
         ),
     ),

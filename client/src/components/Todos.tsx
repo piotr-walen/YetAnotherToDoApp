@@ -16,7 +16,7 @@ interface ITodosState {
 
 class Todos extends React.Component<ITodosProps, ITodosState> {
     public state = {
-        todo: { text: '', complete: false },
+        todo: { text: '', complete: false, id: -1 },
     };
     private input: any;
 
