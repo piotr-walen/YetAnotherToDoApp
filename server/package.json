@@ -18,9 +18,7 @@
         "express": "^4.16.3",
         "jsonwebtoken": "^8.2.2",
         "morgan": "^1.9.0",
-        "pg": "^7.4.3"
-    },
-    "devDependencies": {
+        "pg": "^7.4.3",
         "@types/bcrypt": "^2.0.0",
         "@types/body-parser": "^1.17.0",
         "@types/cors": "^2.8.4",
