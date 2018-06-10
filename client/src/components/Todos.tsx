@@ -1,12 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {IUser} from '../types';
-
-interface ITodo {
-    text: string;
-    complete: boolean;
-}
-
+import { ITodo, IUser } from '../types';
 interface ITodosProps {
     user: IUser;
     todos: ITodo[];
