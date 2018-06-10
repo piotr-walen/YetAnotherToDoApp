@@ -1,11 +1,11 @@
 {
     "scripts": {
         "build-client": "cd server && npm install",
-        "build-server": "cd ../client && npm install && npm run build",
-        "seed-database": "cd ../client && npm run transpile-server && node dist/models/auth && node dist/models/todos",
+        "build-server": "cd client && npm install && npm run build",
+        "seed-database": "cd client && npm run transpile-server && node dist/models/auth && node dist/models/todos",
         "heroku-postbuild": "npm run build-client && npm run build-server && npm run seed-database",
         "transpile-server": "cd server && npm run tsc",
-        "transpile-client": "cd ../client && npm run build",
+        "transpile-client": "cd client && npm run build",
         "start": "npm run transpile-server && npm run transpile-client && node server/dist/index.js"
     }
 }
