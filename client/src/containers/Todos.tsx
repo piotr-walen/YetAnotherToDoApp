@@ -113,7 +113,7 @@ const mapDispatchToProps = (dispatch: DispatchProp<AnyAction>) => ({
 
 const mapStateToProps = (state: IState) => ({
     authenticated: state.auth.authenticated,
-    todos: state.todos.todos,
+    todos: state.todos,
     user: state.auth.user,
 });
 

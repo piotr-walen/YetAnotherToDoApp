@@ -16,7 +16,5 @@ export interface IState {
         authenticated: boolean;
         user: IUser;
     };
-    todos: {
-        todos: ITodo[];
-    };
+    todos: ITodo[];
 }
