@@ -2,9 +2,9 @@
     "name": "todo-list-postgresql",
     "version": "1.0.0",
     "description": "Simple todo list developed with NodeJS, Express, PostgreSQL, React",
-    "main": "index.js",
+    "main": "dist/index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "tsc & nodemon dist/index.js"
     },
     "author": "Piotr Waleń",
     "license": "ISC",
