@@ -1,4 +1,6 @@
 {
-    "heroku-postbuild": "cd server && npm install && tsc && cd ../client && npm install && npm run build",
-    "start": "node server/dist/index.js"
+    "scripts": {
+        "heroku-postbuild": "cd server && npm install && tsc && cd ../client && npm install && npm run build",
+        "start": "node server/dist/index.js"
+    }
 }
