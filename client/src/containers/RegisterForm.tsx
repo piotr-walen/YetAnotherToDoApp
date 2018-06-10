@@ -1,7 +1,7 @@
 import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import { AnyAction, DispatchProp } from 'redux';
 import * as auth from '../actions/auth';
 import RegisterForm from '../components/RegisterForm';
