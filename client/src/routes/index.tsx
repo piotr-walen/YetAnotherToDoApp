@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch, withRouter } from 'react-router';
+import HomePage from '../components/HomePage';
 import LoginForm from '../containers/LoginForm';
 import LogoutView from '../containers/LogoutView';
 import RegisterForm from '../containers/RegisterForm';
@@ -11,7 +12,6 @@ function mapStateToProps(state: any) {
 }
 
 const Routes = ({ authenticated }: any) => {
-    const HomePage = () => <div>Home Page</div>;
     const PotentialTodos = () =>
         authenticated ? <Todos /> : <Redirect to="/login" />;
     const NotFound = () => <div>Not Found</div>;
