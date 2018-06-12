@@ -1,7 +1,7 @@
 {
     "scripts": {
         "build-client": "cd server && npm install",
-        "build-server": "cd client && npm install && npm run build",
+        "build-server": "cd client && npm install",
         "transpile-server": "cd server && npm run tsc",
         "transpile-client": "cd client && npm run build",
         "seed-database": "cd server && node dist/models/auth && node dist/models/todos",
