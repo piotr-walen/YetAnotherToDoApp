@@ -4,9 +4,11 @@
         "build-server": "cd client && npm install && npm run build",
         "transpile-server": "cd server && npm run tsc",
         "transpile-client": "cd client && npm run build",
-        "seed-database": "node server/dist/models/auth && node server/dist/models/todos",
+        "seed-database": "cd server && node dist/models/auth && node dist/models/todos",
         "heroku-postbuild": "npm run build-client && npm run build-server && npm run transpile-server && npm run transpile-client",
         "transpile": "npm run transpile-server && npm run transpile-client",
-        "start": "node server/dist/index.js"
+        "start": "cd server && node dist/index.js",
+        "test":"cd server && npm run test"
+
     }
 }
