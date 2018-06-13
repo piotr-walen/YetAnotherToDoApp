@@ -10,8 +10,8 @@ export const createTodo = async (
     const { text } = request.body;
     const complete = false;
     try {
-        const data = todos.createTodo(userId, text, complete);
-        response.status(201).json({ data });
+        const data = await todos.createTodo(userId, text, complete);
+        response.status(200).json({ data });
     } catch (error) {
         next(error);
     }

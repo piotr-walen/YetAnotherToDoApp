@@ -69,3 +69,11 @@ export const deleteTodo = async (userId: number, id: number) => {
     }
     client.release();
 };
+
+export const deleteUsersTodos = async (userId: number) => {
+    const client = await pool.connect();
+    const result = await client.query('DELETE FROM items WHERE userID=($1)', [
+        userId,
+    ]);
+    client.release();
+};
