@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 import bcrypt from 'bcrypt';
 import pool from '../database';
 import jwt from 'jsonwebtoken';
-import { createUser, removeUser } from '../controllers/auth';
+import * as auth from '../models/auth';
 import { expect } from 'chai';
 
 describe('POST /api/auth/login', async () => {
@@ -15,7 +15,7 @@ describe('POST /api/auth/login', async () => {
     before(async () => {
         username = 'test_username';
         password = 'test_password';
-        data = await createUser('test_username', 'test_password');
+        data = await auth.createUser('test_username', 'test_password');
     });
     it('it should return user data', done => {
         request(app)
@@ -29,7 +29,7 @@ describe('POST /api/auth/login', async () => {
             });
     });
     after(async () => {
-        await removeUser(username);
+        await auth.removeUser(username);
     });
 });
 
@@ -53,6 +53,6 @@ describe('POST /api/auth/register', async () => {
             });
     });
     after(async () => {
-        await removeUser(username);
+        await auth.removeUser(username);
     });
 });
