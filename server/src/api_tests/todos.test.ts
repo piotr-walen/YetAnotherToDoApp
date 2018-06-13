@@ -36,7 +36,7 @@ describe('POST /api/user/:userId/todos', async () => {
     });
     after(async () => {
         await auth.removeUser(user.username);
-        await todos.deleteUsersTodos(data.userid);
+        await todos.deleteUsersTodos(user.id);
     });
 });
 
@@ -48,10 +48,11 @@ describe('GET /api/user/:userId/todos', async () => {
         const password = 'test_password';
         user = await auth.createUser(username, password);
         data = { userid: user.id, text: 'test_text' };
+        await todos.createTodo(user.id, data.text, false);
     });
     it('it should return user todos', done => {
         request(app)
-            .post(`/api/user/${user.id}/todos`)
+            .get(`/api/user/${user.id}/todos`)
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer: ${user.token}`)
             .set('Content-Type', 'application/json')

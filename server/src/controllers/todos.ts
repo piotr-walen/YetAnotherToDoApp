@@ -24,7 +24,7 @@ export const getTodos = async (
 ) => {
     try {
         const { userId } = request.params;
-        const data = todos.getTodos(userId);
+        const data = await todos.getTodos(userId);
         response.status(200).json({ data });
     } catch (error) {
         next(error);
