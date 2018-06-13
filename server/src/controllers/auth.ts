@@ -11,26 +11,8 @@ export const login = async (
     try {
         const { username } = request.body;
         const candidatePassword = request.body.password;
-        const client = await pool.connect();
-        const users = await client.query(
-            'SELECT * FROM users WHERE username=($1)',
-            [username],
-        );
-        const { id, password } = users.rows[0];
-        const validPassword = await bcrypt.compare(candidatePassword, password);
-        if (!validPassword) {
-            const error = new Error('Invalid username or password');
-            throw error;
-        }
-        const token = jwt.sign(
-            {
-                id,
-                username,
-            },
-            String(process.env.SECRET_KEY),
-        );
-        response.status(200).json({ data: { id, username, token } });
-        client.release();
+        const data = await authenticateUser(username, candidatePassword);
+        response.status(200).json({ data });
     } catch (error) {
         next(error);
     }
@@ -42,20 +24,41 @@ export const register = async (
     next: NextFunction,
 ) => {
     try {
-        const data = createUser(request.body);
+        const { username, password } = request.body;
+        const data = await createUser(username, password);
         response.status(200).json({ data });
     } catch (error) {
         next(error);
     }
 };
 
-export const createUser = async ({
-    username,
-    password,
-}: {
-    username: string;
-    password: string;
-}) => {
+export const authenticateUser = async (
+    username: string,
+    candidatePassword: string,
+) => {
+    const client = await pool.connect();
+    const users = await client.query(
+        'SELECT * FROM users WHERE username=($1)',
+        [username],
+    );
+    const { id, password } = users.rows[0];
+    const validPassword = await bcrypt.compare(candidatePassword, password);
+    if (!validPassword) {
+        const error = new Error('Invalid username or password');
+        throw error;
+    }
+    const token = jwt.sign(
+        {
+            id,
+            username,
+        },
+        String(process.env.SECRET_KEY),
+    );
+    client.release();
+    return { id, username, token };
+};
+
+export const createUser = async (username: string, password: string) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const client = await pool.connect();
     await client.query('INSERT INTO users(username, password) values($1, $2)', [
