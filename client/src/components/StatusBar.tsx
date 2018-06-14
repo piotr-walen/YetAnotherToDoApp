@@ -13,11 +13,11 @@ const Bar = styled.div`
 `;
 
 const ErrorBar = styled(Bar)`
-    background-color: rgba(250, 0, 0, 0.2);
+    background-color: rgba(240, 0, 0, 0.3);
 `;
 
 const InfoBar = styled(Bar)`
-    background-color: rgba(0, 250, 0, 0.2);
+    background-color: rgba(0, 240, 0, 0.3);
 `;
 
 const StatusBar = ({ status }: { status: IStatus }) => {
