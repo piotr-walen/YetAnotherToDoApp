@@ -20,9 +20,7 @@
         "jsonwebtoken": "^8.3.0",
         "morgan": "^1.9.0",
         "pg": "^7.4.3",
-        "typescript": "^2.9.1"
-    },
-    "devDependencies": {
+        "typescript": "^2.9.1",
         "@types/bcrypt": "^2.0.0",
         "@types/body-parser": "^1.17.0",
         "@types/chai": "^4.1.4",
