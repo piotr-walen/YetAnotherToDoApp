@@ -16,7 +16,7 @@ const createHandlers = ({
     dispatch: Dispatch<AnyAction>;
 }) => {
     const login = async (user: IUser) => {
-        dispatch(status.clear())
+        dispatch(status.clear());
         const request = {
             body: JSON.stringify({
                 ...user,
@@ -45,7 +45,12 @@ const createHandlers = ({
                 history.push('/');
             }
         } catch (error) {
-            // console.log(error.message);
+            dispatch(
+                status.add({
+                    message: error.message,
+                    severity: 'error',
+                }),
+            );
         }
     };
 
