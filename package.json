@@ -9,6 +9,6 @@
         "start": "cd server && node dist/index.js",
         "transpile": "npm run transpile-server && npm run transpile-client",
         "test": "cd server && npm run test",
-        "launch": "npm run test && npm run transpile && npm run start"
+        "launch": "npm run transpile && npm run test && npm run start"
     }
 }

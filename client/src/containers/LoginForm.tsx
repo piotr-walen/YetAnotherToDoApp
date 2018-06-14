@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { AnyAction, Dispatch } from 'redux';
 import * as auth from '../actions/auth';
+import * as status from '../actions/status';
 import LoginForm from '../components/LoginForm';
 import { IUser } from '../types';
 
@@ -15,6 +16,7 @@ const createHandlers = ({
     dispatch: Dispatch<AnyAction>;
 }) => {
     const login = async (user: IUser) => {
+        dispatch(status.clear())
         const request = {
             body: JSON.stringify({
                 ...user,
@@ -34,6 +36,12 @@ const createHandlers = ({
             }
             if (parsed.data) {
                 dispatch(auth.login(parsed.data));
+                dispatch(
+                    status.add({
+                        message: 'Successfully logged in',
+                        severity: 'info',
+                    }),
+                );
                 history.push('/');
             }
         } catch (error) {
@@ -47,9 +55,7 @@ const createHandlers = ({
 };
 
 export default withRouter<any>(
-    connect()(
-        (props: { history: History; dispatch: Dispatch<AnyAction> }) => (
-            <LoginForm handlers={createHandlers(props)} />
-        ),
-    ),
+    connect()((props: { history: History; dispatch: Dispatch<AnyAction> }) => (
+        <LoginForm handlers={createHandlers(props)} />
+    )),
 );

@@ -3,6 +3,9 @@
     "jsRules": {
         "no-console": false
     },
+    "rules": {
+        "no-console": false
+    },
     "linterOptions": {
         "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
     }

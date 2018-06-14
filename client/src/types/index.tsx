@@ -10,6 +10,10 @@ export interface ITodo {
     text: string;
     complete: boolean;
 }
+export interface IStatus {
+    severity?: string;
+    message?: string;
+}
 
 export interface IState {
     auth: {
@@ -17,4 +21,5 @@ export interface IState {
         user: IUser;
     };
     todos: ITodo[];
+    status: IStatus;
 }

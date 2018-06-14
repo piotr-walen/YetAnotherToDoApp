@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { AnyAction, Dispatch } from 'redux';
 import * as auth from '../actions/auth';
+import * as status from '../actions/status';
 import RegisterForm from '../components/RegisterForm';
 import { IUser } from '../types';
 const createHandlers = ({
@@ -14,6 +15,7 @@ const createHandlers = ({
     dispatch: Dispatch<AnyAction>;
 }) => {
     const register = async (data: IUser) => {
+        dispatch(status.clear());
         const request = {
             body: JSON.stringify({
                 ...data,
@@ -46,9 +48,7 @@ const createHandlers = ({
 };
 
 export default withRouter<any>(
-    connect()(
-        (props: { history: History; dispatch: Dispatch<AnyAction> }) => (
-            <RegisterForm handlers={createHandlers(props)} />
-        ),
-    ),
+    connect()((props: { history: History; dispatch: Dispatch<AnyAction> }) => (
+        <RegisterForm handlers={createHandlers(props)} />
+    )),
 );

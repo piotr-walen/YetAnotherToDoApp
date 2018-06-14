@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
+import * as status from '../actions/status';
 import * as todos from '../actions/todos';
 import Todos from '../components/Todos';
 import { IState, ITodo, IUser } from '../types';
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     createTodo: async (user: IUser, todo: ITodo) => {
+        dispatch(status.clear());
         const request = {
             body: JSON.stringify(todo),
             headers: {
@@ -32,6 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     },
 
     deleteTodo: async (user: IUser, todo: ITodo) => {
+        dispatch(status.clear());
         const request = {
             headers: {
                 Accept: 'application/json',
@@ -59,6 +62,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     },
 
     loadTodos: async (user: IUser) => {
+        dispatch(status.clear());
         const request = {
             headers: {
                 Accept: 'application/json',
@@ -83,6 +87,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     },
 
     toggleTodo: async (user: IUser, todo: ITodo) => {
+        dispatch(status.clear());
         const request = {
             body: JSON.stringify({ ...todo, complete: !todo.complete }),
             headers: {

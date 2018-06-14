@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { AnyAction, Dispatch } from 'redux';
 import * as auth from '../actions/auth';
+import * as status from '../actions/status';
 import LogoutView from '../components/LogoutView';
 import { IUser } from '../types';
 
@@ -15,6 +16,7 @@ const createHandlers = ({
     dispatch: Dispatch<AnyAction>;
 }) => {
     const logout = (user: IUser) => {
+        dispatch(status.clear());
         dispatch(auth.logout(user));
         history.push('/');
     };
@@ -24,9 +26,7 @@ const createHandlers = ({
 };
 
 export default withRouter<any>(
-    connect()(
-        (props: { history: History; dispatch: Dispatch<AnyAction> }) => (
-            <LogoutView handlers={createHandlers(props)} />
-        ),
-    ),
+    connect()((props: { history: History; dispatch: Dispatch<AnyAction> }) => (
+        <LogoutView handlers={createHandlers(props)} />
+    )),
 );
