@@ -121,3 +121,40 @@ describe('PUT /api/user/:userId/todos/:id', async () => {
         await todos.deleteUsersTodos(user.id);
     });
 });
+
+describe('DELETE /api/user/:userId/todos/:id', async () => {
+    let dbtodos: any[];
+    let user: { username: string; id: number; token: string };
+    let newTodo: any;
+    let updateTodo: any;
+    before(async () => {
+        const username = 'test_username1';
+        const password = 'test_password';
+        user = await auth.createUser(username, password);
+        newTodo = { userid: user.id, text: 'test_text', complete: false };
+        dbtodos = await todos.createTodo(
+            user.id,
+            newTodo.text,
+            newTodo.complete,
+        );
+    });
+    it('it should return user todos', done => {
+        request(app)
+            .delete(`/api/user/${user.id}/todos/${dbtodos[0].id}`)
+            .set('Accept', 'application/json')
+            .set('Authorization', `Bearer: ${user.token}`)
+            .set('Content-Type', 'application/json')
+            .send()
+            .end((error, response: any) => {
+                if (error) return done(error);
+                expect(response.statusCode).to.equal(200);
+                expect(response.body.data).to.be.an('array');
+                expect(response.body.data.length).to.equal(0);
+                done();
+            });
+    });
+    after(async () => {
+        await auth.removeUser(user.username);
+        await todos.deleteUsersTodos(user.id);
+    });
+});
