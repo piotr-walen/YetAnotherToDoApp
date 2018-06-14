@@ -29,7 +29,12 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
                 dispatch(todos.loadTodos(parsed.data));
             }
         } catch (error) {
-            // console.log(error.message);
+            dispatch(
+                status.add({
+                    message: error.message,
+                    severity: 'error',
+                }),
+            );
         }
     },
 
@@ -57,7 +62,12 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
                 dispatch(todos.loadTodos(parsed.data));
             }
         } catch (error) {
-            // console.log(error.message);
+            dispatch(
+                status.add({
+                    message: error.message,
+                    severity: 'error',
+                }),
+            );
         }
     },
 
@@ -82,7 +92,12 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
                 dispatch(todos.loadTodos(parsed.data));
             }
         } catch (error) {
-            // console.log(error.message);
+            dispatch(
+                status.add({
+                    message: error.message,
+                    severity: 'error',
+                }),
+            );
         }
     },
 
@@ -111,7 +126,12 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
                 dispatch(todos.loadTodos(parsed.data));
             }
         } catch (error) {
-            // console.log(error.message);
+            dispatch(
+                status.add({
+                    message: error.message,
+                    severity: 'error',
+                }),
+            );
         }
     },
 });
