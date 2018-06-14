@@ -34,10 +34,22 @@ const createHandlers = ({
                 throw new Error(parsed.error);
             }
             if (parsed.data) {
+                dispatch(
+                    status.add({
+                        message: 'Successfully registered',
+                        severity: 'info',
+                    }),
+                );
                 dispatch(auth.login(parsed.data));
                 history.push('/');
             }
         } catch (error) {
+            dispatch(
+                status.add({
+                    message: error.message,
+                    severity: 'error',
+                }),
+            );
             // console.log(error.message);
         }
     };
