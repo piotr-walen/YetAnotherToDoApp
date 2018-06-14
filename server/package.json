@@ -6,7 +6,7 @@
     "scripts": {
         "test": "mocha -r ts-node/register src/**/*.test.ts",
         "start": "tsc & nodemon dist/index.js",
-        "tsc": "ls ./node_modules/typescript/"
+        "tsc": "./node_modules/typescript/bin/tsc"
     },
     "author": "Piotr Waleń",
     "license": "ISC",
