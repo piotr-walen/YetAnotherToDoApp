@@ -4,14 +4,40 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from '../database';
 
-async function createUsersTable() {
+export const createTable = async () => {
     const client = await pool.connect();
     const result = await client.query(
         'CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(40) UNIQUE NOT NULL, password CHAR(60) NOT NULL)',
     );
-    console.log(result.rows);
     client.release();
-}
+    return result.rows;
+};
+
+export const seedTable = async () => {
+    const client = await pool.connect();
+    const newUsers = [
+        { username: 'first_user', password: 'password' },
+        { username: 'another_user', password: '12345' },
+        { username: 'last_user', password: '123pass456' },
+    ];
+    for (let user of newUsers) {
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        await client.query(
+            'INSERT INTO users(username, password) values($1, $2)',
+            [user.username, hashedPassword],
+        );
+    }
+    const result = await client.query('SELECT * FROM users');
+    client.release();
+    return result.rows;
+};
+
+export const dropTable = async () => {
+    const client = await pool.connect();
+    const result = await client.query('DROP TABLE users');
+    client.release();
+    return result.rows;
+};
 
 export const authenticateUser = async (
     username: string,
