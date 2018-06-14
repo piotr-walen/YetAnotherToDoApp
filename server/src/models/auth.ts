@@ -6,6 +6,7 @@ import pool from '../database';
 
 export const createTable = async () => {
     const client = await pool.connect();
+    await client.query('DROP TABLE IF EXISTS users');
     const result = await client.query(
         'CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(40) UNIQUE NOT NULL, password CHAR(60) NOT NULL)',
     );
@@ -13,13 +14,14 @@ export const createTable = async () => {
     return result.rows;
 };
 
-export const seedTable = async () => {
+export const seedTable = async (
+    newUsers: {
+        username: string;
+        password: string;
+    }[],
+) => {
+    await createTable();
     const client = await pool.connect();
-    const newUsers = [
-        { username: 'first_user', password: 'password' },
-        { username: 'another_user', password: '12345' },
-        { username: 'last_user', password: '123pass456' },
-    ];
     for (let user of newUsers) {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         await client.query(
@@ -34,7 +36,7 @@ export const seedTable = async () => {
 
 export const dropTable = async () => {
     const client = await pool.connect();
-    const result = await client.query('DROP TABLE users');
+    const result = await client.query('DROP TABLE IF EXISTS users');
     client.release();
     return result.rows;
 };
