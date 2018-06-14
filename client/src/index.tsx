@@ -5,19 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import App from './App';
 import './index.css';
-import { loadState, saveState } from './localStorage';
+// import { loadState, saveState } from './localStorage';
 import rootReducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
-const persistedState = loadState();
-const store = createStore(
-    rootReducer,
-    persistedState,
-);
+// const persistedState = loadState();
+const store = createStore(rootReducer);
 
-store.subscribe(() => {
-    saveState(store.getState());
-});
+// store.subscribe(() => {
+//     saveState(store.getState());
+// });
 
 ReactDOM.render(
     <Provider store={store}>
@@ -25,6 +22,6 @@ ReactDOM.render(
             <App />
         </BrowserRouter>
     </Provider>,
-    document.getElementById('root')
+    document.getElementById('root'),
 );
 registerServiceWorker();

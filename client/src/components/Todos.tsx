@@ -181,6 +181,8 @@ const TodoGroup = styled.li`
 const DeleteIcon = styled.svg`
     width: 24px;
     height: 24px;
+    margin-top: 6px;
+    margin-bottom: 6px;
     opacity: 0;
     fill: rgba(250, 50, 50, 0.9);
     transition: opacity 0.3s ease-in-out;
