@@ -6,8 +6,8 @@
         "transpile-client": "cd client && npm run build",
         "seed-database": "cd server && node dist/models/auth && node dist/models/todos",
         "heroku-postbuild": "npm run build-client && npm run build-server && npm run transpile-server && npm run transpile-client",
+        "start": "cd server && ls && node dist/index.js",
         "transpile": "npm run transpile-server && npm run transpile-client",
-        "start": "cd server && node dist/index.js",
         "test": "cd server && npm run test",
         "launch": "npm run test && npm run transpile && npm run start"
     }
