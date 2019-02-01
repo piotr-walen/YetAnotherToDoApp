@@ -1,6 +1,5 @@
 <h1>Todo App</h1>
 <p>Todo list app created with TypeScript.</p>
-<p>https://todos-typescript.herokuapp.com/<p>
 <h3>Client technologies:</h3>
 <ul>
     <li>react</li>
